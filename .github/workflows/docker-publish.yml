@@ -28,4 +28,13 @@ jobs:
         with:
           context: .
           push: true
-          tags: ghcr.io/${{ github.repository_owner }}/iphhra:latest
+          tags: ghcr.io/${{ github.repository_owner }}/iphhra:latest,ghcr.io/${{ github.repository_owner }}/iphhra:${{ github.sha }}
+
+      - name: Deploy production
+        uses: simplycubed/gitops-update@0.15
+        with:
+          filename: helm/charts/ip/values.yaml
+          key: image_tag
+          value: ghcr.io/${{ github.repository_owner }}/iphhra:${{ github.sha }}
+          github-org-and-repo:  "savoiringfaire/iphhra"
+          github-deploy-key: ${{ secrets.GITHUB_TOKEN }}
