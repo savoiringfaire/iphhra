@@ -36,6 +36,6 @@ jobs:
           filename: charts/ip/values.yaml
           key: image_tag
           value: ghcr.io/${{ github.repository_owner }}/iphhra:${{ github.sha }}
-          github-org-and-repo:  "savoiringfaire/iphhra"
+          github-org-and-repo:  "savoiringfaire/helm"
           github-deploy-key: ${{ secrets.DEPLOYMENT_SSH_KEY }}
           commit-message: 'deploy ${{ github.sha }} to production'
