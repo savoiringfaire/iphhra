@@ -30,6 +30,20 @@ jobs:
           push: true
           tags: ghcr.io/${{ github.repository_owner }}/iphhra:latest,ghcr.io/${{ github.repository_owner }}/iphhra:${{ github.sha }}
 
+  deploy_development:
+    environment: development
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy development
+        uses: notz/gitops-update@master
+        with:
+          filename: apps/templates/ip-dev.yaml
+          key: spec.source.helm.valuesObject.image
+          value: ghcr.io/${{ github.repository_owner }}/iphhra:${{ github.sha }}
+          github-org-and-repo:  "savoiringfaire/helm"
+          github-deploy-key: ${{ secrets.DEPLOYMENT_SSH_KEY }}
+          commit-message: 'deploy ${{ github.sha }} to production'
+
   deploy_production:
     environment: production
     runs-on: ubuntu-latest
@@ -37,8 +51,8 @@ jobs:
       - name: Deploy production
         uses: notz/gitops-update@master
         with:
-          filename: charts/ip/values.yaml
-          key: image
+          filename: apps/templates/ip-production.yaml
+          key: spec.source.helm.valuesObject.image
           value: ghcr.io/${{ github.repository_owner }}/iphhra:${{ github.sha }}
           github-org-and-repo:  "savoiringfaire/helm"
           github-deploy-key: ${{ secrets.DEPLOYMENT_SSH_KEY }}
