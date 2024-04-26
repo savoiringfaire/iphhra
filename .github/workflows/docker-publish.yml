@@ -23,18 +23,22 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      #- name: Build and push
-      #  uses: docker/build-push-action@v2
-      #  with:
-      #    context: .
-      #    push: true
-      #    tags: ghcr.io/${{ github.repository_owner }}/iphhra:latest,ghcr.io/${{ github.repository_owner }}/iphhra:${{ github.sha }}
+      - name: Build and push
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          push: true
+          tags: ghcr.io/${{ github.repository_owner }}/iphhra:latest,ghcr.io/${{ github.repository_owner }}/iphhra:${{ github.sha }}
 
+  deploy_production:
+    environment: production
+    runs-on: ubuntu-latest
+    steps:
       - name: Deploy production
         uses: notz/gitops-update@master
         with:
           filename: charts/ip/values.yaml
-          key: image_tag
+          key: image
           value: ghcr.io/${{ github.repository_owner }}/iphhra:${{ github.sha }}
           github-org-and-repo:  "savoiringfaire/helm"
           github-deploy-key: ${{ secrets.DEPLOYMENT_SSH_KEY }}
