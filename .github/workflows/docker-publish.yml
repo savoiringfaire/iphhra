@@ -33,6 +33,7 @@ jobs:
   deploy_development:
     environment: development
     runs-on: ubuntu-latest
+    needs: build
     steps:
       - name: Deploy development
         uses: notz/gitops-update@master
@@ -47,6 +48,7 @@ jobs:
   deploy_production:
     environment: production
     runs-on: ubuntu-latest
+    needs: deploy_development
     steps:
       - name: Deploy production
         uses: notz/gitops-update@master
