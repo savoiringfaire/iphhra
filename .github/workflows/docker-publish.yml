@@ -39,7 +39,7 @@ jobs:
         uses: notz/gitops-update@master
         with:
           filename: apps/templates/ip-dev.yaml
-          key: spec.source.helm.valuesObject.image
+          key: image
           value: ghcr.io/${{ github.repository_owner }}/iphhra:${{ github.sha }}
           github-org-and-repo:  "savoiringfaire/helm"
           github-deploy-key: ${{ secrets.DEPLOYMENT_SSH_KEY }}
@@ -54,7 +54,7 @@ jobs:
         uses: notz/gitops-update@master
         with:
           filename: apps/templates/ip-production.yaml
-          key: spec.source.helm.valuesObject.image
+          key: image
           value: ghcr.io/${{ github.repository_owner }}/iphhra:${{ github.sha }}
           github-org-and-repo:  "savoiringfaire/helm"
           github-deploy-key: ${{ secrets.DEPLOYMENT_SSH_KEY }}
