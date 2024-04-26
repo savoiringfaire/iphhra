@@ -33,7 +33,7 @@ jobs:
       - name: Deploy production
         uses: notz/gitops-update@master
         with:
-          filename: helm/charts/ip/values.yaml
+          filename: charts/ip/values.yaml
           key: image_tag
           value: ghcr.io/${{ github.repository_owner }}/iphhra:${{ github.sha }}
           github-org-and-repo:  "savoiringfaire/iphhra"
