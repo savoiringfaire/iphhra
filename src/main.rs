@@ -35,7 +35,7 @@ impl Header for XForwardedFor {
 }
 
 async fn show_ip(TypedHeader(forwarded_for): TypedHeader<XForwardedFor>) -> String {
-    forwarded_for.0
+    format!("ip: {}", forwarded_for.0)
 }
 
 #[tokio::main]
